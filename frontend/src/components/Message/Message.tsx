@@ -3,7 +3,7 @@ import { Paper, Typography } from '@mui/material';
 import { MessageResponse } from '@/types';
 import cls from './message.module.css';
 import { Box } from '@mui/system';
-import dayjs, { extend } from 'dayjs';
+import dayjs from 'dayjs';
 
 interface Props {
   message: MessageResponse;
@@ -15,11 +15,12 @@ const Message: React.FC<Props> = ({message}) => {
   const yesterdayDate = currentDate.subtract(1, 'day');
 
   let formattedDate;
-
-  if (messageDate.isAfter(yesterdayDate)) {
-    formattedDate = 'Вчера';
+  if (messageDate.isSame(currentDate, 'day')) {
+    formattedDate = 'Сегодня ' + messageDate.format('HH:mm A');
+  } else if (messageDate.isAfter(yesterdayDate)) {
+    formattedDate = 'Вчера ' + messageDate.format('HH:mm A');
   } else {
-    formattedDate = messageDate.format('D MMMM HH:mm');
+    formattedDate = messageDate.format('D MMMM HH:mm A');
     if (!messageDate.isSame(currentDate, 'year')) {
       formattedDate += messageDate.format(' YYYY');
     }
