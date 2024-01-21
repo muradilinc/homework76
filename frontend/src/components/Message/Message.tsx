@@ -36,7 +36,7 @@ const Message: React.FC<Props> = ({message}) => {
           {formattedDate ? formattedDate : messageDate.format('DD.MM.YYYY HH:mm')}
         </Typography>
       </Box>
-      <Typography variant="body1">
+      <Typography>
         {message.message}
       </Typography>
     </Paper>
