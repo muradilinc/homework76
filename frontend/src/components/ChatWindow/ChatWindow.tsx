@@ -6,7 +6,6 @@ import { useQuery } from '@tanstack/react-query';
 import axiosApi from '@/axiosApi';
 import { MessageResponse } from '@/types';
 import cls from './ChatWindow.module.css';
-import message from '@/components/Message/Message';
 
 const ChatWindow = () => {
   const {data: messages, refetch} = useQuery({

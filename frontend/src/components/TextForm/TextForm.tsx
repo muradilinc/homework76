@@ -11,6 +11,7 @@ const TextForm = () => {
     message: '',
     author: '',
   });
+
   const messagesMutation = useMutation({
     mutationFn: async (message: Message) => {
       await axiosApi.post('/messages', message);
@@ -28,7 +29,11 @@ const TextForm = () => {
   const sendMessage = async (event: React.FormEvent) => {
     event.preventDefault();
     await messagesMutation.mutateAsync(message);
-  }
+    setMessage({
+      message: '',
+      author: '',
+    });
+  };
 
   return (
     <form onSubmit={sendMessage}>
