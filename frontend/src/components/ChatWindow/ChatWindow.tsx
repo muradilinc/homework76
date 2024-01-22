@@ -8,7 +8,7 @@ import { MessageResponse } from '@/types';
 import cls from './ChatWindow.module.css';
 
 const ChatWindow = () => {
-  const {data: messages, refetch} = useQuery({
+  const {data: messages, refetch, isFetched} = useQuery({
     queryKey: ['messages'],
     queryFn: async () => {
       const messagesResponse = await axiosApi.get<MessageResponse[]>('/messages');
@@ -16,11 +16,14 @@ const ChatWindow = () => {
     }
   });
 
+
   const {data: lastMessages} = useQuery({
     queryKey: ['lastMessages'],
     queryFn: async () => {
-      const messagesResponse = await axiosApi.get<MessageResponse[]>(`/messages?datetime=${messages && messages[0].datetime}`);
-      return messagesResponse.data;
+      if (isFetched) {
+        const messagesResponse = await axiosApi.get<MessageResponse[]>(`/messages?datetime=${messages && messages[0].datetime}`);
+        return messagesResponse.data;
+      }
     },
     refetchInterval: 3000,
   });
